@@ -1,0 +1,33 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Results{% endblock %}
+
+{% block content %}
+    <div class="box border">
+        <h1>Results: {{ name }}</h1>
+        {% if error %}
+            <p>{{ error }}</p>
+        {% else %}
+            <p>
+                <a href="{% url 'polls:summary_results' id %}">Show summary results</a> |
+                <a href="{% url 'polls:export_results' id %}" title="Export results as CSV file" target="_blank">Export results</a>
+            </p>
+            <table>
+                <tr>
+                    <th>Respondent's name</th>
+                    <th>Date</th>
+                    <th>GDPR</th>
+                    <th>Actions</th>
+                </tr>
+                {% for answer in answers %}
+                    <tr>
+                        <td title="{{ answer.name }}">{{ answer.name | truncatechars:50 }}</td>
+                        <td>{{ answer.date }}</td>
+                        <td>{{ answer.gdpr_agreement }}</td>
+                        <td><a href="{% url 'polls:single_result' id answer.id %}" title="Show answers">Detail</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

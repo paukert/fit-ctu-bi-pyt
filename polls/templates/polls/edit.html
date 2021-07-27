@@ -1,0 +1,105 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Edit poll{% endblock %}
+
+{% block content %}
+    <div class="box border edit-poll">
+        <h1 title="{{ poll.name }}">{{ poll.name | truncatechars:50 }}</h1>
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="pollName">Poll name:</label>
+            <input type="text"
+                   minlength="{{ pollNameMinLength }}"
+                   class="input-option-poll"
+                   name="pollName"
+                   id="pollName"
+                   value="{{ poll.name }}">
+            <hr>
+
+            {% for question in poll.question_set.all %}
+                <div class="question">
+                    <span class="question-title">Question #{{ forloop.counter }}:</span>
+                    <button type="submit" class="delete-button" name="deleteQuestion" value="{{ question.id }}">Delete</button><br>
+
+                    <label for="qText{{ question.id }}">Text:</label>
+                    <input type="text"
+                           minlength="{{ questionTextMinLength }}"
+                           class="input-question"
+                           name="qText{{ question.id }}"
+                           id="qText{{ question.id }}"
+                           value="{{ question.text }}"><br>
+
+                    <label for="qOrder{{ question.id }}">Order:</label>
+                    <input type="number"
+                           class="input-order"
+                           name="qOrder{{ question.id }}"
+                           id="qOrder{{ question.id }}"
+                           value="{{ question.order }}">
+
+                    <label for="qType{{ question.id }}">Type:</label>
+                    <select name="qType{{ question.id }}" id="qType{{ question.id }}">
+                        {% for question_type in questionTypes %}
+                            {% if question.question_type_id == question_type.id %}
+                                <option value="{{ question_type.id }}" selected>{{ question_type.name }}</option>
+                            {% else %}
+                                <option value="{{ question_type.id }}">{{ question_type.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select><br>
+
+                    {% for option in question.option_set.all %}
+                        <label for="oText{{ option.id }}">Option #{{ forloop.counter }}:</label>
+                        <input type="text"
+                               minlength="{{ optionTextMinLength }}"
+                               class="input-option-poll"
+                               name="oText{{ option.id }}"
+                               id="oText{{ option.id }}"
+                               value="{{ option.text }}">
+                        <button type="submit" class="delete-button" name="deleteOption" value="{{ option.id }}">Delete</button><br>
+                    {% endfor %}
+
+                    <label for="oTextNew{{ question.id }}">Option #n:</label>
+                    <input type="text"
+                           minlength="{{ optionTextMinLength }}"
+                           class="input-option-poll"
+                           name="oTextNew{{ question.id }}"
+                           id="oTextNew{{ question.id }}">
+                    <button type="submit" class="add-button" name="addNewOption" value="addNewOption">Add</button>
+                </div>
+                <hr>
+            {% endfor %}
+
+            <!-- New question fields -->
+            <label for="qTextNew">Text:</label>
+            <input type="text"
+                   minlength="{{ questionTextMinLength }}"
+                   class="input-question"
+                   name="qTextNew"
+                   id="qTextNew"><br>
+
+            <label for="qOrderNew">Order:</label>
+            <input type="number" class="input-order" name="qOrderNew" id="qOrderNew">
+
+            <label for="qTypeNew">Type:</label>
+            <select name="qTypeNew" id="qTypeNew">
+                {% for question_type in questionTypes %}
+                    <option value="{{ question_type.id }}">{{ question_type.name }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="add-button" name="addNewQuestion" value="addNewQuestion">Add question</button><br>
+
+            {% if poll.state.name == 'Draft' %}
+                <button type="submit" class="add-button" name="changeState" value="changeState">Start poll</button>
+            {% elif poll.state.name == 'Active' %}
+                <button type="submit" class="add-button" name="changeState" value="changeState">Close poll</button>
+            {% endif %}
+            <button type="submit" class="save-button" name="save" value="save">Save all</button>
+            <button type="submit" class="delete-button" name="deletePoll" value="deletePoll">Delete poll</button>
+        </form>
+    </div>
+{% endblock %}

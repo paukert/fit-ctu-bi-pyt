@@ -1,0 +1,10 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Thank you{% endblock %}
+
+{% block content %}
+    <div class="center border">
+        <h1>Thank you for filling the poll ❤️</h1>
+        <a href="{% url 'polls:index' %}">Back to the main page.</a>
+    </div>
+{% endblock %}

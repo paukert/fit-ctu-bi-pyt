@@ -1,0 +1,200 @@
+/* Background pattern from Toptal Subtle Patterns */
+body {
+    background-image: url("background.png");
+    font-family: 'Open Sans', sans-serif;
+    color: #000000;
+}
+
+/* Sidebar */
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #0065BD;
+    overflow-x: hidden;
+}
+
+.item {
+    color: #FFFFFF;
+    padding: 20px 30px;
+    font-size: 22px;
+}
+
+.item:hover {
+    background-color: #1471C2;
+}
+/* End Sidebar */
+
+/* Page content */
+.main {
+    text-align: center;
+    margin-left: 250px;
+    padding: 40px;
+}
+/* End Page content */
+
+/* Standard elements */
+a {
+    color: #0065BD;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #0065BD;
+}
+
+input {
+    text-align: center;
+    padding: 5px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+hr {
+    width: 80%;
+    border: 1px solid #e5e5e5;
+    border-bottom: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 700px;
+    border-collapse: collapse;
+    margin: 0 auto;
+    margin-bottom: 40px !important;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 5px;
+    font-weight: normal;
+    border: 1px solid #CCCCCC;
+}
+/* End Standard elements */
+
+/* Div boxes */
+.center {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 250px !important;
+    padding: 30px 50px;
+    background-color: #FFFFFF;
+}
+
+.box {
+    width: 75%;
+    min-width: 800px;
+    padding: 20px;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+}
+
+.border {
+    border: 1px solid #CCCCCC;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 1px #DDDDDD;
+}
+/* End Div boxes */
+
+/* Results */
+.text-results {
+    padding: 20px 60px;
+    text-align: left;
+}
+
+.text-results-answer {
+    margin: 10px 0;
+}
+
+.no-answers {
+    color: #0065BD;
+    font-style: italic;
+}
+/* End Results */
+
+/* Administration (admin.html + edit.html) */
+td.actions {
+    width: 50px;
+}
+
+.edit-poll button {
+    width: 120px;
+    height: 35px;
+    padding: 5px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+.edit-poll input {
+    height: 25px;
+    margin: 2px;
+}
+
+.edit-poll select {
+    height: 35px;
+    margin-right: 20px !important;
+}
+
+.input-option-poll {
+    width: 300px;
+}
+
+.input-order {
+    width: 100px;
+    margin-right: 20px !important;
+}
+
+.input-question {
+    width: 600px;
+    margin-top: 10px !important;
+}
+
+.question-title {
+    font-size: 25px;
+    margin: 0 30px 0 0;
+}
+
+.add-button {
+    background-color: #4CAF50;
+}
+
+.delete-button {
+    background-color: #F44336;
+}
+
+.save-button {
+    font-size: 17px;
+    margin: 30px 0 10px 0;
+    background-color: #0065BD;
+}
+/* End Administration */
+
+/* Other */
+.button {
+    font-size: 20px;
+    margin: 25px;
+    padding: 5px 10px;
+}
+
+.error-message {
+    color: #FF0000;
+}
+
+.success-message {
+    color: #339933;
+}
+
+.form-field {
+    padding: 20px 0 0 0;
+}
+
+.question {
+    padding: 15px;
+}

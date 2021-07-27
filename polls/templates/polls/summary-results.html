@@ -1,0 +1,34 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Summary results{% endblock %}
+
+{% block content %}
+    <div class="box border">
+        <h1 title="{{ name }}">Results: {{ name | truncatechars:50 }}</h1>
+        {% if error %}
+            <p>{{ error }}</p>
+        {% else %}
+            {% for result in results %}
+                {% if result.containChart %}
+                    {{ result.chart | safe }}
+                {% else %}
+                    <div class="text-results">
+                        {{ result.textAnswers.text }}
+                        {% for answers in result.textAnswers.answers %}
+                            <div class="text-results-answer">
+                                {{ answers.optionText }}<br>
+                                {% if answers.optionAnswers %}
+                                    {% for answer in answers.optionAnswers %}
+                                        <i>{{ answer }}</i><br>
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="no-answers">No answers connected with this question.</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

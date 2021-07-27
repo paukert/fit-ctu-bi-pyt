@@ -1,0 +1,29 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+    <div class="box border">
+        <h1>Log in</h1>
+        <form method="post">
+            {% csrf_token %}
+            {% for error in form.non_field_errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+            {% for field in form %}
+                <div class="form-field">
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <br>{{ field.help_text }}
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="error-message">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="button">Log in</button>
+        </form>
+        <p>Don't have an account yet? <a href="{% url 'polls:signup' %}">Sign up</a>.</p>
+    </div>
+{% endblock %}

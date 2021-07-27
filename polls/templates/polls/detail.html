@@ -1,0 +1,51 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Fill the poll{% endblock %}
+
+{% block content %}
+    <div class="box border">
+        <h1>{{ poll.name }}</h1>
+        <form action="{% url 'polls:vote' poll.id %}" method="post">
+            {% csrf_token %}
+            <label for="name">Name:</label><br>
+            <input type="text" name="name" id="name" placeholder="Enter your name">
+
+            {% for question in poll.question_set.all %}
+                <div class="question">
+                    {{ question.text }}<br>
+                    {% if question.question_type.name == 'Single choice' %}
+                        {% for option in question.option_set.all %}
+                            <label>
+                                {% if forloop.first %}
+                                    <input type="radio" name="question-{{ question.id }}" value="{{ option.id }}" checked>
+                                {% else %}
+                                    <input type="radio" name="question-{{ question.id }}" value="{{ option.id }}">
+                                {% endif %}
+                                {{ option.text }}
+                            </label><br>
+                        {% endfor %}
+                    {% elif question.question_type.name == 'Multi choice' %}
+                        {% for option in question.option_set.all %}
+                            <label>
+                                <input type="checkbox" name="{{ option.id }}">
+                                {{ option.text }}
+                            </label><br>
+                        {% endfor %}
+                    {% else %}
+                        {% for option in question.option_set.all %}
+                            <label>
+                                {{ option.text }}<br>
+                                <textarea name="{{ option.id }}" rows="6" cols="70"></textarea>
+                            </label><br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <input type="checkbox" name="gdpr" id="gdpr">
+            <label for="gdpr">I agree with displaying my name in poll results and in exports.</label><br>
+
+            <input class="button" type="submit" value="Send answers">
+        </form>
+    </div>
+{% endblock %}

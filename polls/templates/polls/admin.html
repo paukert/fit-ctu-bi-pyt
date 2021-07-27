@@ -1,0 +1,57 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block content %}
+    <div class="box border">
+        <h1>Administration</h1>
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <p class="error-message">{{ message }}</p>
+                {% else %}
+                    <p class="success-message">{{ message }}</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if polls.exists %}
+            <table>
+                <tr>
+                    <th>Name of the poll</th>
+                    <th>State</th>
+                    <th>Number of responses</th>
+                    <th colspan="4">Actions</th>
+                </tr>
+                {% for poll in polls %}
+                    <tr>
+                        <td title="{{ poll.name }}">{{ poll.name | truncatechars:50 }}</td>
+                        <td title="{{ poll.state.description }}">{{ poll.state.name }}</td>
+                        <td>{{ poll.answer_set.count }}</td>
+                        <td class="actions"><a href="{% url 'polls:results' poll.id %}">Results</a></td>
+                        <td class="actions"><a href="{% url 'polls:edit' poll.id %}">Edit</a></td>
+                        <td class="actions"><a href="{% url 'polls:export_poll' poll.id %}" title="Export poll" target="_blank">Export</a></td>
+                        <td class="actions"><a href="{% url 'polls:generate_pdf' poll.id %}" title="Get poll as PDF" target="_blank">PDF</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        <div class="edit-poll">
+            <form method="post">
+                {% csrf_token %}
+                <label for="newPollName">New poll name:</label>
+                <input type="text"
+                       minlength="{{ pollNameMinLength }}"
+                       class="input-option-poll"
+                       name="newPollName"
+                       id="newPollName">
+                <button type="submit" class="add-button" name="addPoll" value="addPoll">Add</button>
+            </form><br>
+            <form action="{% url 'polls:import_poll' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="file">Choose a CSV file:</label>
+                <input type="file" id="file" name="file" accept="text/csv">
+                <button type="submit" class="add-button">Upload</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

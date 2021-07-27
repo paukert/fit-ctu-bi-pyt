@@ -1,0 +1,21 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Find your poll{% endblock %}
+
+{% block content %}
+    <div class="center border">
+        <h1>PollsX</h1>
+
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <label>
+                <input type="text" name="poll_id" placeholder="Enter poll ID here"><br>
+            </label>
+            <button type="submit" class="button">Show poll</button>
+        </form>
+    </div>
+{% endblock %}

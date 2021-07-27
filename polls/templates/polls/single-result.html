@@ -1,0 +1,30 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Results{% endblock %}
+
+{% block content %}
+    <div class="box border">
+        <h1 title="{{ name }}">Results: {{ name | truncatechars:50 }}</h1>
+        Respondent's name: {{ respondent }}<br>
+        Filled in: {{ date }}
+        {% for question in questions %}
+            <hr>
+            <b>Question #{{ forloop.counter }}:</b><br>
+            {{ question.text }}<br>
+            {% if question.answers %}
+                {% for answer in question.answers %}
+                    {{ answer.option.text }}<br>
+                    {% if question.type == 'Text answer' %}
+                        {% if answer.text %}
+                            <i>{{ answer.text }}</i><br>
+                        {% else %}
+                            <span class="no-answers">No answers connected with this option.</span>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <span class="no-answers">No answers connected with this question.</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
+    <div class="box border">
+        <h1>Sign up</h1>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-field">
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <br>{{ field.help_text }}
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="error-message">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="button">Sign up</button>
+        </form>
+        <p>If you already have an account, <a href="{% url 'polls:login' %}">log in</a> instead.</p>
+    </div>
+{% endblock %}
